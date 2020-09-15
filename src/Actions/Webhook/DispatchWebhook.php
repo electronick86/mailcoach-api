@@ -25,6 +25,20 @@ class DispatchWebhook
         $triggerKey = $this->triggers->getTriggerKey($eventName);
         $property = array_keys(get_object_vars($eventPayload))[0] ?? null;
 
+        $payload_event = Str::replaceFirst('Spatie\\Mailcoach\\Events\\', '', $eventName);
+
+        if($payload_event == "CampaignOpenedEvent" || $payload_event == "CampaignLinkClickedEvent"){
+            $payload_payload = $property ? optional($eventPayload->$property->with("subscriber"))->toArray() : null;
+        }
+        $payload_payload = $property ? optional($eventPayload->$property)->toArray() : null;
+
+
+        $payload = [
+            'event'   => $payload_event,
+            'payload' => $payload_payload,
+        ];
+        
+        
         $payload = [
             'event'   => Str::replaceFirst('Spatie\\Mailcoach\\Events\\', '', $eventName),
             'payload' => $property ? optional($eventPayload->$property)->toArray() : null,
