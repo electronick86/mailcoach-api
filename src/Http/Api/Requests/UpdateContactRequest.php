@@ -13,7 +13,7 @@ class UpdateContactRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'                       => 'sometimes|email:rfc,dns',
+            'email'                       => 'sometimes|email:rfc',
             'unsubscribe_from_list_ids'   => 'sometimes|array',
             'unsubscribe_from_list_ids.*' => ['sometimes', 'integer', new Exists(EmailList::class, 'id')],
             'resubscribe_to_list_ids'     => 'sometimes|array',
