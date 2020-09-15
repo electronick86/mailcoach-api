@@ -28,7 +28,7 @@ class DispatchWebhook
         $payload_event = Str::replaceFirst('Spatie\\Mailcoach\\Events\\', '', $eventName);
 
         if($payload_event == "CampaignOpenedEvent" || $payload_event == "CampaignLinkClickedEvent"){
-            $payload_payload = $property ? optional($eventPayload->$property->with("subscriber"))->toArray() : null;
+            $payload_payload = $property ? optional($eventPayload->$property->with("subscriber")->get() )->toArray() : null;
         }
         $payload_payload = $property ? optional($eventPayload->$property)->toArray() : null;
 
@@ -39,10 +39,10 @@ class DispatchWebhook
         ];
         
         
-        $payload = [
+        /*$payload = [
             'event'   => Str::replaceFirst('Spatie\\Mailcoach\\Events\\', '', $eventName),
             'payload' => $property ? optional($eventPayload->$property)->toArray() : null,
-        ];
+        ];*/
 
         Webhook::query()
                ->withTrigger($triggerKey)
