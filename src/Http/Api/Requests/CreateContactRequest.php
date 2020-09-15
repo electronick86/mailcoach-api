@@ -12,7 +12,7 @@ class CreateContactRequest extends FormRequest
     public function rules()
     {
         return [
-            'email'        => 'required|email:rfc,dns',
+            'email'        => 'required|email:rfc',
             'list_ids'     => 'required|array',
             'list_ids.*'   => ['required', 'integer', new Exists(EmailList::class, 'id')],
             'attributes'   => 'nullable|array',
