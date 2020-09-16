@@ -30,8 +30,9 @@ class DispatchWebhook
         if($payload_event == "CampaignOpenedEvent" || $payload_event == "CampaignLinkClickedEvent"){
             $payload_payload = $property ? optional($eventPayload->$property->with("subscriber"))->toArray() : null;
         }
-        $payload_payload = $property ? optional($eventPayload->$property)->toArray() : null;
-
+        else{
+           $payload_payload = $property ? optional($eventPayload->$property)->toArray() : null;
+        }
 
         $payload = [
             'event'   => $payload_event,
