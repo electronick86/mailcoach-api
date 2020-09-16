@@ -3,6 +3,7 @@
 namespace Leeovery\MailcoachApi\Actions\Webhook;
 
 use Illuminate\Support\Str;
+use Spatie\Mailcoach\Models\Subscriber;
 use Spatie\WebhookServer\WebhookCall;
 use Leeovery\MailcoachApi\Models\Webhook;
 use Leeovery\MailcoachApi\Support\Triggers;
