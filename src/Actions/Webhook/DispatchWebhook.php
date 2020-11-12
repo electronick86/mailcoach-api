@@ -30,7 +30,12 @@ class DispatchWebhook
         $payload_payload = $property ? optional($eventPayload->$property)->toArray() : null;
 
         if( array_key_exists('subscriber_id', $payload_payload)){
-            $payload_payload = array_merge( $payload_payload, ["subscriber_email"=> Subscriber::find($payload_payload['subscriber_id'])->email ]);
+            $subscriber = Subscriber::whereId( $payload_payload['subscriber_id'] )->with("emailList")->first();
+
+            $payload_payload = array_merge( $payload_payload, [
+                    "subscriber_email"=> $subscriber->email,
+                    "email_list_name" => $subscriber->emailList->name,
+            ]);
         }
 
         $payload = [
