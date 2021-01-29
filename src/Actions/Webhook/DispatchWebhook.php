@@ -5,8 +5,10 @@ namespace Leeovery\MailcoachApi\Actions\Webhook;
 use Illuminate\Support\Str;
 use Spatie\Mailcoach\Models\Subscriber;
 use Spatie\WebhookServer\WebhookCall;
+use Spatie\Mailcoach\Models\CampaignLink;
 use Leeovery\MailcoachApi\Models\Webhook;
 use Leeovery\MailcoachApi\Support\Triggers;
+
 
 class DispatchWebhook
 {
@@ -35,6 +37,14 @@ class DispatchWebhook
             $payload_payload = array_merge( $payload_payload, [
                     "subscriber_email"=> $subscriber->email,
                     "email_list_name" => $subscriber->emailList->name,
+            ]);
+        }
+
+        if( array_key_exists('campaign_link_id', $payload_payload)){
+            $campaignLink = CampaignLink::whereId( $payload_payload['campaign_link_id'] )->first();
+
+            $payload_payload = array_merge( $payload_payload, [
+                "campaign_link_url"=> optional($campaignLink)->url,
             ]);
         }
 
