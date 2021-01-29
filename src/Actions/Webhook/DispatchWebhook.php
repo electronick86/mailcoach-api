@@ -44,7 +44,7 @@ class DispatchWebhook
             $campaignLink = CampaignLink::whereId( $payload_payload['campaign_link_id'] )->first();
 
             $payload_payload = array_merge( $payload_payload, [
-                "campaign_link_url"=> optional($campaignLink)->url,
+                "campaign_link_url"=> optional($campaignLink)->url
             ]);
         }
 
